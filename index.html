@@ -4,16 +4,315 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nagari Maju - Kabupaten Sejahtera</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome untuk Icon (Opsional) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ================= VARIABEL & RESET ================= */
+        :root {
+            --primary-green: #3D5A40;
+            --light-green: #81B29A;
+            --bg-cream: #F4F1DE;
+            --text-dark: #2B2D42;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Efek scroll halus */
+            scroll-padding-top: 80px; /* Jarak agar header tidak menutupi judul section */
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        section {
+            padding: 80px 50px;
+            min-height: 100vh;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* ================= HEADER & NAVIGASI ================= */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: var(--white);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary-green);
+        }
+
+        .logo h1 {
+            font-size: 1.2rem;
+            color: var(--primary-green);
+        }
+
+        .logo p {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-green);
+            border-bottom: 2px solid var(--primary-green);
+            padding-bottom: 5px;
+        }
+
+        /* ================= 1. SECTION BERANDA ================= */
+        #beranda {
+            padding-top: 120px; /* Extra padding for first section */
+        }
+        
+        .hero-content {
+            max-width: 700px;
+            margin-bottom: 50px;
+        }
+
+        .hero-content .subtitle { font-size: 1.2rem; color: #555; }
+        .hero-content .title { font-size: 4rem; color: var(--primary-green); margin: 10px 0; line-height: 1.1; }
+        .hero-content .desc { margin-bottom: 25px; font-size: 1.1rem; }
+        
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background-color: var(--white);
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+        .card i { font-size: 2.5rem; color: var(--light-green); margin-bottom: 15px; }
+        .card h3 { color: var(--primary-green); margin-bottom: 10px; }
+
+        .info-bar {
+            display: flex;
+            background-color: var(--light-green);
+            border-radius: 15px;
+            overflow: hidden;
+            color: var(--white);
+        }
+
+        .info-bar .location {
+            background-color: var(--primary-green);
+            padding: 30px;
+            flex: 1;
+        }
+        .info-bar .stats {
+            display: flex;
+            flex: 2;
+            justify-content: space-around;
+            align-items: center;
+            padding: 30px;
+        }
+        .stat-item h3 { font-size: 2rem; }
+
+        /* ================= 2. SECTION PERANGKAT NAGARI ================= */
+        #perangkat {
+            background-color: var(--white);
+        }
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .org-box {
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            min-width: 200px;
+        }
+        .org-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .org-box.light {
+            background-color: var(--light-green);
+        }
+
+        /* ================= 3. SECTION SEJARAH ================= */
+        #sejarah {
+            background-color: var(--bg-cream);
+        }
+        .history-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        .history-text { flex: 1; }
+        .history-img {
+            flex: 1;
+            background-color: #ddd;
+            height: 300px;
+            border-radius: 15px;
+            background-image: url('https://via.placeholder.com/600x400/81B29A/FFFFFF?text=Ilustrasi+Sejarah');
+            background-size: cover;
+        }
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            position: relative;
+            padding-top: 20px;
+            border-top: 3px solid var(--primary-green);
+        }
+        .timeline-item {
+            position: relative;
+            width: 20%;
+            text-align: center;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: -27px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 15px;
+            background-color: var(--white);
+            border: 4px solid var(--primary-green);
+            border-radius: 50%;
+        }
+
+        /* ================= 4. SECTION LOKASI ================= */
+        #lokasi {
+            background-color: var(--white);
+        }
+        .map-container {
+            display: flex;
+            gap: 30px;
+            height: 500px;
+        }
+        .map-info {
+            flex: 1;
+            background-color: var(--bg-cream);
+            padding: 30px;
+            border-radius: 15px;
+        }
+        .map-view {
+            flex: 2;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.2rem;
+            background-image: url('https://via.placeholder.com/800x600/3D5A40/FFFFFF?text=Peta+Interaktif+Nagari');
+            background-size: cover;
+        }
+
+        /* ================= 5. SECTION TENTANG ================= */
+        #tentang {
+            background-color: var(--bg-cream);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .contact-box {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        /* ================= FOOTER ================= */
+        footer {
+            background-color: var(--primary-green);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .history-content { flex-direction: column; }
+            .map-container { flex-direction: column; height: auto; }
+            .about-grid { grid-template-columns: 1fr; }
+            .info-bar { flex-direction: column; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Bagian Navigasi Atas -->
+    <!-- NAVIGASI -->
     <header id="navbar">
         <div class="logo">
-            <img src="https://via.placeholder.com/40" alt="Logo Nagari">
+            <i class="fas fa-shield-alt"></i>
             <div>
                 <h1>Nagari Maju</h1>
                 <p>Kabupaten Sejahtera</p>
@@ -21,92 +320,208 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#" class="active">Beranda</a></li>
-                <li><a href="#">Perangkat Nagari</a></li>
-                <li><a href="#">Sejarah Nagari</a></li>
-                <li><a href="#">Lokasi Nagari</a></li>
-                <li><a href="#">Tentang</a></li>
+                <!-- Menggunakan href dengan ID untuk scroll otomatis -->
+                <li><a href="#beranda" class="nav-link active">Beranda</a></li>
+                <li><a href="#perangkat" class="nav-link">Perangkat Nagari</a></li>
+                <li><a href="#sejarah" class="nav-link">Sejarah Nagari</a></li>
+                <li><a href="#lokasi" class="nav-link">Lokasi Nagari</a></li>
+                <li><a href="#tentang" class="nav-link">Tentang</a></li>
             </ul>
         </nav>
-        <div class="header-icon">
-            <i class="fas fa-phone-alt"></i>
-        </div>
     </header>
 
-    <!-- Bagian Hero / Utama -->
     <main>
-        <section class="hero-section">
+        <!-- SECTION 1: BERANDA -->
+        <section id="beranda">
             <div class="hero-content">
                 <p class="subtitle">Selamat Datang di</p>
                 <h1 class="title">Nagari Maju</h1>
-                <p class="description">
-                    Harmoni Alam, Budaya, dan Masyarakat<br>
+                <p class="desc">
+                    Harmoni Alam, Budaya, dan Masyarakat.<br>
                     Bersama Membangun Nagari yang Maju, Mandiri, dan Berbudaya.
                 </p>
-                <a href="#" class="btn-primary">Selengkapnya &rarr;</a>
+                <a href="#tentang" class="btn-primary">Selengkapnya &rarr;</a>
             </div>
 
-            <!-- Kartu Fitur -->
             <div class="feature-cards">
                 <div class="card">
-                    <i class="fas fa-leaf card-icon"></i>
+                    <i class="fas fa-leaf"></i>
                     <h3>Profil Nagari</h3>
                     <p>Mengenal lebih dekat Nagari Maju</p>
                 </div>
                 <div class="card">
-                    <i class="fas fa-newspaper card-icon"></i>
+                    <i class="fas fa-newspaper"></i>
                     <h3>Berita & Kegiatan</h3>
                     <p>Informasi terbaru seputar kegiatan nagari</p>
                 </div>
                 <div class="card">
-                    <i class="fas fa-hand-holding-heart card-icon"></i>
+                    <i class="fas fa-hand-holding-heart"></i>
                     <h3>Layanan Publik</h3>
                     <p>Akses layanan bagi masyarakat</p>
                 </div>
                 <div class="card">
-                    <i class="fas fa-images card-icon"></i>
+                    <i class="fas fa-images"></i>
                     <h3>Galeri Nagari</h3>
                     <p>Dokumentasi potret nagari kami</p>
                 </div>
             </div>
-        </section>
 
-        <!-- Bagian Informasi Singkat -->
-        <section class="info-section">
-            <div class="info-box location">
-                <i class="fas fa-map-marker-alt"></i>
-                <div>
+            <div class="info-bar">
+                <div class="location">
                     <h4>Kantor Wali Nagari</h4>
-                    <p>Jln. Nagari Maju No. 01, Kec. Sejahtera<br>Kab. Sejahtera Prov. Sumatera Barat</p>
-                    <a href="#" class="btn-outline">Lihat Lokasi &rarr;</a>
+                    <p style="margin-top: 10px;">Jln. Nagari Maju No. 01, Kec. Sejahtera<br>Kab. Sejahtera Prov. Sumatera Barat</p>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <p>Luas Wilayah</p>
+                        <h3>12.345 Ha</h3>
+                    </div>
+                    <div class="stat-item">
+                        <p>Jumlah Penduduk</p>
+                        <h3>4.560 Jiwa</h3>
+                    </div>
+                    <div class="stat-item">
+                        <p>Jorong</p>
+                        <h3>5</h3>
+                    </div>
                 </div>
             </div>
-            <div class="info-stats">
-                <div class="stat-item">
-                    <p>Luas Wilayah</p>
-                    <h3>12.345 Ha</h3>
+        </section>
+
+        <!-- SECTION 2: PERANGKAT NAGARI -->
+        <section id="perangkat">
+            <h2 class="section-title">Struktur Organisasi Nagari</h2>
+            <div class="org-chart">
+                <div class="org-box">Wali Nagari</div>
+                <div class="org-row">
+                    <div class="org-box light">Sekretaris Nagari</div>
                 </div>
-                <div class="stat-item">
-                    <p>Jumlah Penduduk</p>
-                    <h3>4.560 Jiwa</h3>
+                <div class="org-row">
+                    <div class="org-box light">Kaur Pemerintahan</div>
+                    <div class="org-box light">Kaur Pembangunan</div>
+                    <div class="org-box light">Kaur Keuangan</div>
                 </div>
-                <div class="stat-item">
-                    <p>Jorong</p>
-                    <h3>5</h3>
+            </div>
+        </section>
+
+        <!-- SECTION 3: SEJARAH -->
+        <section id="sejarah">
+            <h2 class="section-title">Sejarah Nagari Maju</h2>
+            <div class="history-content">
+                <div class="history-text">
+                    <p>Nagari Maju berdiri sejak tahun 1800-an, yang didirikan oleh para tokoh adat yang memiliki visi untuk membangun kehidupan masyarakat yang rukun, adil, dan sejahtera.</p>
+                    <br>
+                    <p>Seiring berjalannya waktu, Nagari Maju terus berkembang dengan tetap mempertahankan nilai-nilai adat dan budaya Minangkabau yang berlandaskan <strong>"Adat Basandi Syarak, Syarak Basandi Kitabullah"</strong>.</p>
                 </div>
-                <div class="stat-item">
-                    <p>Dusun</p>
-                    <h3>12</h3>
+                <div class="history-img"></div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>1800</h4>
+                    <p>Awal mula berdirinya Nagari</p>
                 </div>
+                <div class="timeline-item">
+                    <h4>1920</h4>
+                    <p>Perkembangan sistem pemerintahan</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>1950</h4>
+                    <p>Pembangunan infrastruktur</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2000</h4>
+                    <p>Era modernisasi Nagari</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: LOKASI NAGARI -->
+        <section id="lokasi">
+            <h2 class="section-title">Lokasi Administrasi</h2>
+            <div class="map-container">
+                <div class="map-info">
+                    <h3>Batas Wilayah</h3>
+                    <ul style="margin-top: 15px; margin-left: 20px; line-height: 2;">
+                        <li><strong>Utara:</strong> Nagari Harapan</li>
+                        <li><strong>Selatan:</strong> Nagari Sejahtera</li>
+                        <li><strong>Timur:</strong> Nagari Makmur</li>
+                        <li><strong>Barat:</strong> Nagari Jaya</li>
+                    </ul>
+                </div>
+                <div class="map-view">
+                    <!-- Placeholder Peta -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: TENTANG -->
+        <section id="tentang">
+            <h2 class="section-title">Tentang Nagari</h2>
+            <div class="about-grid">
+                <div class="card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Visi</h3>
+                    <p>Terwujudnya Nagari Maju yang mandiri, berbudaya, dan sejahtera.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Misi</h3>
+                    <p>Meningkatkan pelayanan publik dan pembangunan yang berkelanjutan.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-flag"></i>
+                    <h3>Tujuan</h3>
+                    <p>Mewujudkan masyarakat yang berdaya, religius, dan berakhlak mulia.</p>
+                </div>
+            </div>
+
+            <div class="contact-box">
+                <h3>Kontak Kami</h3>
+                <p><i class="fas fa-map-marker-alt" style="color:var(--primary-green); width:20px;"></i> Jln. Nagari Maju No. 01, Kec. Sejahtera</p>
+                <p><i class="fas fa-envelope" style="color:var(--primary-green); width:20px;"></i> info@nagarimaju.id</p>
+                <p><i class="fas fa-phone" style="color:var(--primary-green); width:20px;"></i> (0751) 123456</p>
             </div>
         </section>
     </main>
 
-    <!-- Bagian Footer -->
     <footer>
         <p>&copy; 2024 Nagari Maju. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- JAVASCRIPT UNTUK FITUR HIGHLIGHT NAVIGASI SAAT SCROLL -->
+    <script>
+        // Mengubah warna navbar saat di-scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = "0 4px 15px rgba(0,0,0,0.1)";
+            } else {
+                navbar.style.boxShadow = "0 2px 10px rgba(0,0,0,0.05)";
+            }
+        });
+
+        // Script untuk mendeteksi section mana yang sedang dilihat & update menu aktif
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
